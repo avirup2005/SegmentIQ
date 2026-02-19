@@ -127,6 +127,57 @@ const EXAMPLE_PROFILES = [
   },
 ]
 
+const EXAMPLE_OUTPUTS = {
+  budget: {
+    status: 'success',
+    cluster: 0,
+    segment_name: 'Budget Conscious',
+    emoji: '💸',
+    description:
+      'Lower income customers who shop infrequently and spend modestly. Respond well to discounts and deals.',
+    traits: ['Price sensitive', 'Infrequent buyer', 'Deal seeker'],
+    color: '#6366f1',
+    confidence: 86.4,
+    probabilities: {
+      cluster_0: 86.4,
+      cluster_1: 9.8,
+      cluster_2: 3.8,
+    },
+  },
+  mid: {
+    status: 'success',
+    cluster: 1,
+    segment_name: 'Mid-Tier Shopper',
+    emoji: '🛍️',
+    description:
+      'Average income customers with moderate spending habits. Balanced across product categories.',
+    traits: ['Moderate spender', 'Web buyer', 'Promo responsive'],
+    color: '#10b981',
+    confidence: 78.9,
+    probabilities: {
+      cluster_0: 12.2,
+      cluster_1: 78.9,
+      cluster_2: 8.9,
+    },
+  },
+  premium: {
+    status: 'success',
+    cluster: 2,
+    segment_name: 'Premium Customer',
+    emoji: '⭐',
+    description:
+      'High income, high spending customers. Prefer quality over price and rarely use discounts.',
+    traits: ['High spender', 'Loyal', 'Premium products'],
+    color: '#f59e0b',
+    confidence: 91.3,
+    probabilities: {
+      cluster_0: 3.4,
+      cluster_1: 5.3,
+      cluster_2: 91.3,
+    },
+  },
+}
+
 const INPUT_FIELDS = [
   { key: 'Age', label: 'Age', step: '1', min: 0 },
   {
@@ -411,8 +462,12 @@ function App() {
 
   const applyExample = (example) => {
     setForm(example.payload)
-    setResult(null)
-    setStatus('idle')
+    setResult({
+      source: 'Example output',
+      payload: EXAMPLE_OUTPUTS[example.id],
+      notes: 'Fixed demo output for this example.',
+    })
+    setStatus('success')
   }
 
   return (
