@@ -1,0 +1,39 @@
+{
+  "model_type": "LogisticRegression",
+  "best_params": {
+    "C": 100,
+    "max_iter": 100,
+    "solver": "lbfgs"
+  },
+  "accuracy": 0.9955,
+  "n_clusters": 3,
+  "feature_columns": [
+    "Age",
+    "Education",
+    "Marital Status",
+    "Parental Status",
+    "Children",
+    "Income",
+    "Total_Spending",
+    "Days_as_Customer",
+    "Recency",
+    "Wines",
+    "Fruits",
+    "Meat",
+    "Fish",
+    "Sweets",
+    "Gold",
+    "Web",
+    "Catalog",
+    "Store",
+    "Discount Purchases",
+    "Total Promo",
+    "NumWebVisitsMonth"
+  ],
+  "trained_on": "2026-02-18 12:09",
+  "cluster_sizes": {
+    "0": 948,
+    "1": 586,
+    "2": 706
+  }
+}
