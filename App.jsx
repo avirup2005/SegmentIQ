@@ -219,11 +219,119 @@ const FIELDS = [
   {k:"NumWebVisitsMonth", l:"Web Visits / Month",    t:"n", p:"5",    c:3},
 ];
 
+const EXAMPLES = [
+  {
+    id: 0,
+    name: "Budget Conscious",
+    blurb: "Lower income, low spend, deal-driven habits.",
+    stats: [
+      { l: "Income", v: "$22k" },
+      { l: "Spend", v: "$120" },
+      { l: "Recency", v: "75d" },
+    ],
+    data: {
+      Age: 28,
+      Education: 1,
+      Marital_Status: 0,
+      Parental_Status: 0,
+      Children: 0,
+      Income: 22000,
+      Total_Spending: 120,
+      Days_as_Customer: 400,
+      Recency: 75,
+      Wines: 15,
+      Fruits: 8,
+      Meat: 25,
+      Fish: 6,
+      Sweets: 12,
+      Gold: 5,
+      Web: 1,
+      Catalog: 0,
+      Store: 2,
+      Discount_Purchases: 4,
+      Total_Promo: 2,
+      NumWebVisitsMonth: 2,
+    }
+  },
+  {
+    id: 1,
+    name: "Mid-Tier Shopper",
+    blurb: "Balanced income and steady multi-channel buying.",
+    stats: [
+      { l: "Income", v: "$52k" },
+      { l: "Spend", v: "$900" },
+      { l: "Recency", v: "28d" },
+    ],
+    data: {
+      Age: 40,
+      Education: 2,
+      Marital_Status: 1,
+      Parental_Status: 1,
+      Children: 1,
+      Income: 52000,
+      Total_Spending: 900,
+      Days_as_Customer: 1400,
+      Recency: 28,
+      Wines: 300,
+      Fruits: 60,
+      Meat: 200,
+      Fish: 80,
+      Sweets: 60,
+      Gold: 110,
+      Web: 5,
+      Catalog: 3,
+      Store: 6,
+      Discount_Purchases: 2,
+      Total_Promo: 1,
+      NumWebVisitsMonth: 5,
+    }
+  },
+  {
+    id: 2,
+    name: "Premium Customer",
+    blurb: "High income, high spend, low discount usage.",
+    stats: [
+      { l: "Income", v: "$120k" },
+      { l: "Spend", v: "$3.2k" },
+      { l: "Recency", v: "8d" },
+    ],
+    data: {
+      Age: 50,
+      Education: 3,
+      Marital_Status: 1,
+      Parental_Status: 1,
+      Children: 2,
+      Income: 120000,
+      Total_Spending: 3200,
+      Days_as_Customer: 2100,
+      Recency: 8,
+      Wines: 1200,
+      Fruits: 180,
+      Meat: 700,
+      Fish: 260,
+      Sweets: 180,
+      Gold: 420,
+      Web: 8,
+      Catalog: 5,
+      Store: 10,
+      Discount_Purchases: 0,
+      Total_Promo: 0,
+      NumWebVisitsMonth: 10,
+    }
+  }
+];
+
 function Predict() {
   const [form, setForm] = useState({});
   const [res, setRes]   = useState(null);
   const [load, setLoad] = useState(false);
   const [err, setErr]   = useState(null);
+
+  const applyExample = (ex) => {
+    setForm(ex.data);
+    setRes(null);
+    setErr(null);
+  };
 
   const go = async () => {
     setLoad(true); setErr(null); setRes(null);
@@ -276,6 +384,33 @@ function Predict() {
           <button className="btn" onClick={go} disabled={load}>
             {load ? <span style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10}}><span className="spin"/>Analyzing...</span> : "✦ Predict Segment"}
           </button>
+          <div style={{marginTop:18}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
+              <div style={{fontSize:11,fontWeight:800,color:"#7c6aac",letterSpacing:".1em",textTransform:"uppercase"}}>Example Profiles</div>
+              <div style={{fontSize:11,color:"#7c6aac"}}>One per cluster</div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+              {EXAMPLES.map(ex=>(
+                <div key={ex.id} className="card" style={{padding:14}}>
+                  <div style={{fontWeight:700,fontSize:13,marginBottom:6}}>{ex.name}</div>
+                  <div style={{fontSize:12,color:"#7c6aac",marginBottom:10,lineHeight:1.5}}>{ex.blurb}</div>
+                  <div style={{display:"flex",gap:10,marginBottom:10,flexWrap:"wrap"}}>
+                    {ex.stats.map((s,i)=>(
+                      <span key={i} style={{fontSize:11,color:"#a78bfa",background:"rgba(167,139,250,0.08)",border:"1px solid rgba(167,139,250,0.18)",padding:"3px 7px",borderRadius:10}}>
+                        {s.l}: {s.v}
+                      </span>
+                    ))}
+                  </div>
+                  <button
+                    onClick={()=>applyExample(ex)}
+                    style={{width:"100%",padding:"8px 10px",borderRadius:8,border:"1px solid rgba(167,139,250,0.25)",background:"rgba(124,58,237,0.08)",color:"#e8e0ff",fontSize:12,fontWeight:700,cursor:"pointer"}}
+                  >
+                    Use Example
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
         {res&&(
           <div className="glass" style={{padding:28,borderLeft:`3px solid ${C[res.cluster]}`,boxShadow:`0 0 40px ${C[res.cluster]}18`,animation:"up .5s cubic-bezier(.16,1,.3,1) both"}}>
