@@ -203,7 +203,11 @@ const SOCIALS = [
     href: 'https://github.com/avirup2005',
     note: 'github.com/avirup2005',
   },
-  { label: 'Email', href: 'mailto:avirupsasmal2005@gmail.com', note: 'Email me' },
+  {
+    label: 'Email',
+    href: 'mailto:avirupsasmal2005@gmail.com',
+    note: 'avirupsasmal2005@gmail.com',
+  },
   { label: 'Portfolio', href: '#', note: 'Add your link' },
 ]
 
