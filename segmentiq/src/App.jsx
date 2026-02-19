@@ -25,6 +25,108 @@ const DEFAULT_INPUT = {
   NumWebVisitsMonth: 5,
 }
 
+const EXAMPLE_PROFILES = [
+  {
+    id: 'budget',
+    name: 'Budget Conscious',
+    blurb: 'Lower income, low spend, deal-driven habits.',
+    stats: [
+      { label: 'Income', value: '$22k' },
+      { label: 'Spend', value: '$120' },
+      { label: 'Recency', value: '75d' },
+    ],
+    payload: {
+      Age: 28,
+      Education: 1,
+      Marital_Status: 0,
+      Parental_Status: 0,
+      Children: 0,
+      Income: 22000,
+      Total_Spending: 120,
+      Days_as_Customer: 400,
+      Recency: 75,
+      Wines: 15,
+      Fruits: 8,
+      Meat: 25,
+      Fish: 6,
+      Sweets: 12,
+      Gold: 5,
+      Web: 1,
+      Catalog: 0,
+      Store: 2,
+      Discount_Purchases: 4,
+      Total_Promo: 2,
+      NumWebVisitsMonth: 2,
+    },
+  },
+  {
+    id: 'mid',
+    name: 'Mid-Tier Shopper',
+    blurb: 'Balanced income and steady multi-channel buying.',
+    stats: [
+      { label: 'Income', value: '$52k' },
+      { label: 'Spend', value: '$900' },
+      { label: 'Recency', value: '28d' },
+    ],
+    payload: {
+      Age: 40,
+      Education: 2,
+      Marital_Status: 1,
+      Parental_Status: 1,
+      Children: 1,
+      Income: 52000,
+      Total_Spending: 900,
+      Days_as_Customer: 1400,
+      Recency: 28,
+      Wines: 300,
+      Fruits: 60,
+      Meat: 200,
+      Fish: 80,
+      Sweets: 60,
+      Gold: 110,
+      Web: 5,
+      Catalog: 3,
+      Store: 6,
+      Discount_Purchases: 2,
+      Total_Promo: 1,
+      NumWebVisitsMonth: 5,
+    },
+  },
+  {
+    id: 'premium',
+    name: 'Premium Customer',
+    blurb: 'High income, high spend, low discount usage.',
+    stats: [
+      { label: 'Income', value: '$120k' },
+      { label: 'Spend', value: '$3.2k' },
+      { label: 'Recency', value: '8d' },
+    ],
+    payload: {
+      Age: 50,
+      Education: 3,
+      Marital_Status: 1,
+      Parental_Status: 1,
+      Children: 2,
+      Income: 120000,
+      Total_Spending: 3200,
+      Days_as_Customer: 2100,
+      Recency: 8,
+      Wines: 1200,
+      Fruits: 180,
+      Meat: 700,
+      Fish: 260,
+      Sweets: 180,
+      Gold: 420,
+      Web: 8,
+      Catalog: 5,
+      Store: 10,
+      Discount_Purchases: 0,
+      Total_Promo: 0,
+      NumWebVisitsMonth: 10,
+    },
+  },
+]
+
 const INPUT_FIELDS = [
   { key: 'Age', label: 'Age', step: '1', min: 0 },
   {
@@ -307,6 +409,12 @@ function App() {
     }
   }
 
+  const applyExample = (example) => {
+    setForm(example.payload)
+    setResult(null)
+    setStatus('idle')
+  }
+
   return (
     <div className="page" onMouseMove={handleMouseMove}>
       <div className="ambient">
@@ -478,6 +586,34 @@ function App() {
             <p className="hint">
               Education, marital status, and parental status are now dropdowns.
             </p>
+            <div className="example-block">
+              <div className="example-head">
+                <span>Example profiles</span>
+                <span className="example-sub">One per cluster</span>
+              </div>
+              <div className="example-grid">
+                {EXAMPLE_PROFILES.map((profile) => (
+                  <article key={profile.id} className="example-card">
+                    <div className="example-title">{profile.name}</div>
+                    <p>{profile.blurb}</p>
+                    <div className="example-stats">
+                      {profile.stats.map((stat) => (
+                        <span key={stat.label}>
+                          {stat.label}: {stat.value}
+                        </span>
+                      ))}
+                    </div>
+                    <button
+                      className="btn"
+                      type="button"
+                      onClick={() => applyExample(profile)}
+                    >
+                      Use example
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="field output">
